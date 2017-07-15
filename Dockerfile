@@ -78,5 +78,9 @@ RUN chown root:root /zap/zap-x.sh && \
 	chown root:root /root/.xinitrc && \
 	chmod a+x /root/.xinitrc && \
 	chown root:root /root -R
+
+CMD zap.sh -daemon -host 0.0.0.0 -port 8080
+EXPOSE 8080
+
 #Change back to zap at the end
 HEALTHCHECK --retries=5 --interval=5s CMD zap-cli status
