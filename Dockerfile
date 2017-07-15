@@ -34,13 +34,13 @@ RUN pip install zapcli
 # Install latest dev version of the python API
 RUN pip install python-owasp-zap-v2.4
 
-RUN mkdir /zap 
+RUN mkdir -p /zap 
 WORKDIR /zap
 RUN chown root:root /zap -R
 
 #Change to the zap user so things get done as the right person (apart from copy)
 
-RUN mkdir /root/.vnc
+RUN mkdir -p /root/.vnc
 
 
 
