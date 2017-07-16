@@ -45,11 +45,11 @@ RUN mkdir -p /root/.vnc
 
 
 # Download and expand the latest stable release 
-RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | xmlstarlet sel -t -v //url |grep -i Linux | wget --content-disposition -i - -O - | tar zxv && \
+RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | xmlstarlet sel -t -v //url |grep -i Linux | wget -q --content-disposition -i - -O - | tar zx && \
 	cp -R ZAP*/* . &&  \
 	rm -R ZAP* && \
 	curl -s -L https://bitbucket.org/meszarv/webswing/downloads/webswing-2.3-distribution.zip > webswing.zip && \
-	unzip *.zip && \
+	unzip -q *.zip && \
 	rm *.zip && \
 	touch AcceptedLicense
 
@@ -80,7 +80,7 @@ RUN chown root:root /zap/zap-x.sh && \
 	chown root:root /root -R
 
 CMD zap.sh -daemon -host 0.0.0.0 -port 8080
-EXPOSE 8080
+EXPOSE [8080,8090]
 
 #Change back to zap at the end
 HEALTHCHECK --retries=5 --interval=5s CMD zap-cli status
