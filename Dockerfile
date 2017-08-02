@@ -72,6 +72,7 @@ COPY zap_* /zap/
 COPY webswing.config /zap/webswing-2.3/ 
 COPY policies /var/lib/jenkins/.ZAP/policies/
 COPY .xinitrc /var/lib/jenkins/
+RUN mkdir /zap/wrk
 
 RUN chown 1001:1001 /zap/zap-x.sh && \
 	chown 1001:1001 /zap/zap-baseline.py && \
