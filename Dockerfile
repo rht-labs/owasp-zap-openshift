@@ -78,7 +78,7 @@ RUN chown root:root /zap/zap-x.sh && \
 	chown root:root -R /var/lib/jenkins/.ZAP/ && \
 	chown root:root /var/lib/jenkins/.xinitrc && \
 	chmod 775 /var/lib/jenkins -R && \
-	chmod 775 /zap -R \
+	chmod 775 /zap -R && \
 	chown root:root /var/lib/jenkins -R
 
 # Run the Jenkins JNLP client
