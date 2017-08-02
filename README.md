@@ -27,8 +27,9 @@ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-opens
 
 ## Using it in your Jenkinsfile
 ```groovy
-node('zap') {
-    stage('Get a ZAP Pod') {
+
+stage('Get a ZAP Pod') {
+    node('zap') {
         stage('Scan Web Application') {
             dir('/zap') {
                 def retVal = sh returnStatus: true, script: '/zap/zap-baseline.py -r baseline.html -t http://<some-web-site>'
