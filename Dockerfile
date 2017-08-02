@@ -1,32 +1,16 @@
 # This dockerfile builds the zap stable release
-FROM fedora:latest
+FROM centos:centos7
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
-RUN dnf install -y redhat-rpm-config make automake autoconf gcc gcc-c++ libstdc++ libstdc++-devel java-1.8.0-openjdk ruby wget curl xmlstarlet unzip git x11vnc xorg-x11-server-Xvfb openbox xterm net-tools ruby-devel python-pip firefox 
-#RUN apt-get update && apt-get install -q -y --fix-missing \
-#	make \
-#	automake \
-#	autoconf \
-#	gcc g++ \
-#	openjdk-8-jdk \
-#	ruby \
-#	wget \
-#	curl \
-#	xmlstarlet \
-#	unzip \
-#	git \
-#	x11vnc \
-#	xvfb \
-#	openbox \
-#	xterm \
-#	net-tools \
-#	ruby-dev \
-#	python-pip \
-#	firefox \
-#	xvfb \
-#	x11vnc && \
-#	apt-get clean && \
-#	rm -rf /var/lib/apt/lists/*
+RUN yum install -y epel-release
+RUN yum install -y redhat-rpm-config \
+    make automake autoconf gcc gcc-c++ \
+    libstdc++ libstdc++-devel \
+    java-1.8.0-openjdk ruby wget curl \
+    xmlstarlet unzip git x11vnc \
+    xorg-x11-server-Xvfb openbox xterm \
+    net-tools ruby-devel python-pip \
+    firefox
 
 RUN pip install --upgrade pip
 RUN gem install zapr
@@ -42,7 +26,26 @@ RUN chown root:root /zap -R
 
 RUN mkdir -p /root/.vnc
 
+ENV HOME=/home/jenkins
 
+USER root
+
+RUN yum clean all && \
+    yum-config-manager --disable rhel* 1>/dev/null && \
+    yum-config-manager --enable rhel-7-server-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-3.2-rpms && \
+    export INSTALL_PKGS="nss_wrapper java-1.8.0-openjdk-headless \
+        java-1.8.0-openjdk-devel nss_wrapper gettext tar git" && \
+    yum clean all && \
+    yum install -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all && \
+    mkdir -p /var/lib/jenkins && \
+    chown -R 1001:0 /var/lib/jenkins && \
+    chmod -R g+w /var/lib/jenkins
+
+# Copy the entrypoint
+COPY configuration/* /var/lib/jenkins/
 
 # Download and expand the latest stable release 
 RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | xmlstarlet sel -t -v //url |grep -i Linux | wget -q --content-disposition -i - -O - | tar zx && \
@@ -60,27 +63,24 @@ ENV ZAP_PATH /zap/zap.sh
 
 # Default port for use with zapcli
 ENV ZAP_PORT 8080
-ENV HOME /root/
-
+ENV HOME /var/lib/jenkins
 
 COPY zap-x.sh /zap/ 
 COPY zap-* /zap/ 
 COPY zap_* /zap/ 
 COPY webswing.config /zap/webswing-2.3/ 
-COPY policies /root/.ZAP/policies/
-COPY .xinitrc /root/
+COPY policies /var/lib/jenkins/.ZAP/policies/
+COPY .xinitrc /var/lib/jenkins/
 
-RUN chown root:root /zap/zap-x.sh && \
-	chown root:root /zap/zap-baseline.py && \
-	chown root:root /zap/zap-webswing.sh && \
-	chown root:root /zap/webswing-2.3/webswing.config && \
-	chown root:root -R /root/.ZAP/ && \
-	chown root:root /root/.xinitrc && \
-	chmod a+x /root/.xinitrc && \
-	chown root:root /root -R
+RUN chown 1001:1001 /zap/zap-x.sh && \
+	chown 1001:1001 /zap/zap-baseline.py && \
+	chown 1001:1001 /zap/zap-webswing.sh && \
+	chown 1001:1001 /zap/webswing-2.3/webswing.config && \
+	chown 1001:1001 -R /var/lib/jenkins/.ZAP/ && \
+	chown 1001:1001 /var/lib/jenkins/.xinitrc && \
+	chmod a+x /var/lib/jenkins/.xinitrc && \
+	chown 1001:1001 /var/lib/jenkins -R
 
-CMD zap.sh -daemon -host 0.0.0.0 -port 8080
-EXPOSE [8080,8090]
-
-#Change back to zap at the end
-HEALTHCHECK --retries=5 --interval=5s CMD zap-cli status
+USER 1001
+# Run the Jenkins JNLP client
+ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
