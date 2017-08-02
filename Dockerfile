@@ -74,15 +74,14 @@ COPY policies /var/lib/jenkins/.ZAP/policies/
 COPY .xinitrc /var/lib/jenkins/
 RUN mkdir /zap/wrk
 
-RUN chown 1001:1001 /zap/zap-x.sh && \
-	chown 1001:1001 /zap/zap-baseline.py && \
-	chown 1001:1001 /zap/zap-webswing.sh && \
-	chown 1001:1001 /zap/webswing-2.3/webswing.config && \
-	chown 1001:1001 -R /var/lib/jenkins/.ZAP/ && \
-	chown 1001:1001 /var/lib/jenkins/.xinitrc && \
+RUN chown root:root /zap/zap-x.sh && \
+	chown root:root /zap/zap-baseline.py && \
+	chown root:root /zap/zap-webswing.sh && \
+	chown root:root /zap/webswing-2.3/webswing.config && \
+	chown root:root -R /var/lib/jenkins/.ZAP/ && \
+	chown root:root /var/lib/jenkins/.xinitrc && \
 	chmod a+x /var/lib/jenkins/.xinitrc && \
-	chown 1001:1001 /var/lib/jenkins -R
+	chown root:root /var/lib/jenkins -R
 
-USER 1001
 # Run the Jenkins JNLP client
 ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
