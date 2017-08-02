@@ -24,9 +24,9 @@ RUN chown root:root /zap -R
 
 #Change to the zap user so things get done as the right person (apart from copy)
 
-RUN mkdir -p /root/.vnc
+RUN mkdir -p /var/lib/jenkins/.vnc
 
-ENV HOME=/home/jenkins
+ENV HOME=/var/lib/jenkins
 
 USER root
 
@@ -54,14 +54,12 @@ RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersio
 	rm *.zip && \
 	touch AcceptedLicense
 
-
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-ENV PATH $JAVA_HOME/bin:/zap/:$PATH
+ENV PATH $JAVA_HOME/bin:/zap:$PATH
 ENV ZAP_PATH /zap/zap.sh
 
 # Default port for use with zapcli
 ENV ZAP_PORT 8080
-ENV HOME /var/lib/jenkins
 
 COPY zap-x.sh /zap/ 
 COPY zap-* /zap/ 
