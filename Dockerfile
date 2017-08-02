@@ -46,6 +46,7 @@ RUN yum clean all && \
 
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/
+COPY configuration/run-jnlp-client /usr/local/bin/run-jnlp-client
 
 # Download and expand the latest stable release 
 RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | xmlstarlet sel -t -v //url |grep -i Linux | wget -q --content-disposition -i - -O - | tar zx && \
