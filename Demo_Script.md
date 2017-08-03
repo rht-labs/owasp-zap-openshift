@@ -58,3 +58,12 @@ stage('Get a ZAP Pod') {
 1. Switch back to Jenkins and run the Example build, wait for the ZAP baseline scan to complete. 
    1. While waiting, explain that we could also push in additional and more detailed specifications for the test by either copying in ZAP configurations or mounting Kubernetes ConfigMap file literals as provided by the security teams. These could be configured on a case-by-case basis part of the initial planning with the security team.
 1. Once the scan is complete, show the saved ZAP report in the build sidebar.
+
+* Discuss methods to customize how the ZAP scans are run. 
+  * Mounted ConfigMap files?
+  * Mounted volumes
+  * Download config via HTTP/CURL
+  * https://github.com/zaproxy/zaproxy/wiki/Docker
+
+* More detailed options for baseline scan:
+  * https://github.com/zaproxy/zaproxy/wiki/ZAP-Baseline-Scan
