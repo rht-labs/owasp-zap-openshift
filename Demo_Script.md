@@ -1,6 +1,6 @@
 # Demo Script
 
-1. Start The Container Development Kit (Can be downloaded from http://developers.redhat.com/)
+1. Start The [Container Development Kit](https://developers.redhat.com/products/cdk/download/)
 1. Create a new project called `zap-demo`
    1. Via cli: `oc new-project zap-demo`
 1. Deploy the image to OpenShift: `oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git`
