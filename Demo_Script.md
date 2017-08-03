@@ -30,12 +30,12 @@
 Name: jnlp
 Docker image: 172.30.1.1:5000/zap-demo/owasp-zap-openshift  << The Docker image registry may be different on different OpenShift installations
 Working directory: /tmp                                     << Explain that this MOUNTS a working directory, it does not set the working directory
-Command to run should be blank
-Arguments should be: ${computer.jnlpmac} ${computer.name}
-Un-tick the "Allocate pseudo-TTY" checkbox
+Command to run slave agent: <blank>
+Arguments to pass to the command: ${computer.jnlpmac} ${computer.name}
+Allocate pseudo-TTY: Unchecked
 ```
-1. Set the Max Instances to 1
-1. Set the retention to 10 minutes while idle
+1. Max number of instances: 1
+1. Time in minutes to retain slave when idle: 10
 1. Click "Save"
 1. Click "New Item" on the Jenkins main page
 1. Set the name to "Example", select "Pipeline" as the project type, then click "OK"
