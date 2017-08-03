@@ -27,12 +27,12 @@
 1. Fill in the "Name" and "Labels" as `zap-demo`
 1. Click on "Add" under "Containers"
 ```
-    Name: jnlp
-    Docker image: 172.30.1.1:5000/zap-demo/owasp-zap-openshift  << The Docker image registry may be different on different OpenShift installations
-    Working directory: /tmp                                     << Explain that this MOUNTS a working directory, it does not set the working directory
-    Command to run should be blank
-    Arguments should be: ${computer.jnlpmac} ${computer.name}
-    Un-tick the "Allocate pseudo-TTY" checkbox
+Name: jnlp
+Docker image: 172.30.1.1:5000/zap-demo/owasp-zap-openshift  << The Docker image registry may be different on different OpenShift installations
+Working directory: /tmp                                     << Explain that this MOUNTS a working directory, it does not set the working directory
+Command to run should be blank
+Arguments should be: ${computer.jnlpmac} ${computer.name}
+Un-tick the "Allocate pseudo-TTY" checkbox
 ```
 1. Set the Max Instances to 1
 1. Set the retention to 10 minutes while idle
