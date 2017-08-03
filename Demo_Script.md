@@ -1,18 +1,23 @@
 # Demo Script
 
 1. Start The Container Development Kit (Can be downloaded from http://developers.redhat.com/)
-1. Deploy the image to OpenShift: oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git
+1. Create a new project called `zap-demo`
+   1. Via cli: `oc new-project zap-demo`
+1. Deploy the image to OpenShift: `oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git`
 1. Switch to the OpenShift web console and show the build executing
+   1. Can capture the image URL here or in the step below
 1. Once the build is complete, navigate to "Builds->Images" and copy the registry URL for the new container
    1. Should look like: 172.30.1.1:5000/zap-demo/owasp-zap-openshift
-1. Open the web console
 1. Deploy Persistent Jenkins installation - Point out that you may want to use additional storage space.
+   1. Via cli: `oc process openshift//jenkins-persistent -p VOLUME_CAPACITY=5Gi | oc create -f -`
+   1. Show Jenkins being spun up in web console
 1. Log in to the Jenkins instance
 1. Click on "Manage Jenkins"
 1. Click on "Manage Plugins"
 1. Select the "Available" tab
 1. Filter for "HTML Publisher"
-1. Install "HTML Publisher" plugin
+1. Tick the "HTML Publisher" plugin and click "Download now and install after restart"
+1. Tick the box "Restart Jenkins when installation is complete and no jobs are running"
 1. While Jenkins restarts, explain that the HTML Publisher plugin allows us to add reports to the build history and explain that we will show this in more detail later
 1. Log back in to Jenkins
 1. Click on "Manage Jenkins -> Configure System"
@@ -34,11 +39,11 @@
 1. Click "Save"
 1. Click "New Item" on the Jenkins main page
 1. Set the name to "Example", select "Pipeline" as the project type, then click "OK"
-1. Tick the box to disallow concurrent builds
+1. Tick the box "Do not allow concurrent builds"
 1. Insert the pipeline script:
 ```groovy
 stage('Get a ZAP Pod') {
-    node('zap') {
+    node('zap-demo') {
         stage('Scan Web Application') {
             dir('/zap') {
                 def retVal = sh returnStatus: true, script: '/zap/zap-baseline.py -r baseline.html -t http://<some-web-site>'
