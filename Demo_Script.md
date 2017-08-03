@@ -36,6 +36,7 @@ Allocate pseudo-TTY: Unchecked
 ```
 1. Max number of instances: 1
 1. Time in minutes to retain slave when idle: 10
+1. Leave all other settings with default values
 1. Click "Save"
 1. Click "New Item" on the Jenkins main page
 1. Set the name to "Example", select "Pipeline" as the project type, then click "OK"
