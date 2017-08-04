@@ -76,13 +76,14 @@ Allocate pseudo-TTY: Unchecked
 24. Click "Save"
 25. Click "New Item" on the Jenkins main page ![Jenkins New Pipeline](Jenkins_New_Pipeline.png)
 26. Set the name to "Example", select "Pipeline" as the project type, then click "OK"
-27. Tick the box "Do not allow concurrent builds" ![](Jenkins_Disable_Concurrent_Builds.png)
+27. Tick the box "Do not allow concurrent builds" ![Jenkins Deny Concurrent Builds](Jenkins_Disable_Concurrent_Builds.png)
 28. Insert the pipeline script:
 ```groovy
 stage('Get a ZAP Pod') {
     node('zap-demo') {
         stage('Scan Web Application') {
-            dir('/zap') {
+            sh 'mkdir /tmp/workdir'
+            dir('/tmp/workdir') {
                 def retVal = sh returnStatus: true, script: '/zap/zap-baseline.py -r baseline.html -t http://<some-web-site>'
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '/zap/wrk', reportFiles: 'baseline.html', reportName: 'ZAP Baseline Scan', reportTitles: 'ZAP Baseline Scan'])
                 echo "Return value is: ${retVal}"
