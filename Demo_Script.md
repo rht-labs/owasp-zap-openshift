@@ -38,7 +38,7 @@ $ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-ope
 6. Deploy Jenkins
    1. Via cli: `oc process openshift//jenkins-ephemeral -p VOLUME_CAPACITY=5Gi | oc create -f -`
 ```bash
-$ oc process openshift//jenkins-ephermeral | oc create -f -
+$ oc process openshift//jenkins-ephemeral | oc create -f -
 route "jenkins" created
 persistentvolumeclaim "jenkins" created
 deploymentconfig "jenkins" created
