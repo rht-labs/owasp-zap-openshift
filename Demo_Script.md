@@ -37,6 +37,7 @@ $ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-ope
    1. Should look like: 172.30.1.1:5000/zap-demo/owasp-zap-openshift ![ZAP Image Stream](ZAP_Image_Stream.png)
 6. Deploy Jenkins
    1. Via cli: `oc process openshift//jenkins-ephemeral -p VOLUME_CAPACITY=5Gi | oc create -f -`
+   2. Show Jenkins being spun up in web console ![Jenkins Deployed](Jenkins_Deployed.png)
 ```bash
 $ oc process openshift//jenkins-ephemeral | oc create -f -
 route "jenkins" created
@@ -47,7 +48,6 @@ rolebinding "jenkins_edit" created
 service "jenkins-jnlp" created
 service "jenkins" created
 ```
-   2. Show Jenkins being spun up in web console ![Jenkins Deployed](Jenkins_Deployed.png)
 7. Log in to the Jenkins instance ![Jenkins Main Page](Jenkins_Main_Page.png) ![Jenkins OpenShift Login](Jenkins_OpenShift_Login.png)
 8. Click on "Jenkins->Manage Jenkins->Manage Plugins" ![Jenkins Manage Plugins](Jenkins_Manage_Plugins.png)
 10. Select the "Available" tab ![Jenkins Available Plugins HTML Publisher](Jenkins_Available_Plugins_HTML_Publisher.png)
