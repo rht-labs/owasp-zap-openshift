@@ -13,9 +13,9 @@ You can add applications to this project with the 'new-app' command. For example
 
 to build a new example application in Ruby.
 ```
-3. Deploy the image to OpenShift: `oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git`
+3. Deploy the image to OpenShift: `oc new-build https://github.com/rht-labs/owasp-zap-openshift.git`
 ```
-$ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git
+$ oc new-build https://github.com/rht-labs/owasp-zap-openshift.git
 --> Found Docker image 36540f3 (4 weeks old) from Docker Hub for "centos:centos7"
 
     * An image stream will be created as "centos:centos7" that will track the source image
@@ -36,7 +36,7 @@ $ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-ope
 5. Once the build is complete, navigate to "Builds->Images" and copy the registry URL for the new container
    1. Should look like: 172.30.1.1:5000/zap-demo/owasp-zap-openshift ![ZAP Image Stream](ZAP_Image_Stream.png)
 6. Deploy Jenkins
-   1. Via cli: `oc process openshift//jenkins-ephemeral -p VOLUME_CAPACITY=5Gi | oc create -f -`
+   1. Via cli: `oc process openshift//jenkins-ephemeral | oc create -f -`
    2. Show Jenkins being spun up in web console ![Jenkins Deployed](Jenkins_Deployed.png)
 ```bash
 $ oc process openshift//jenkins-ephemeral | oc create -f -
