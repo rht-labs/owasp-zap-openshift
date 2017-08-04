@@ -35,10 +35,10 @@ $ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-ope
    1. Can capture the image URL here or in the step below ![ZAP Build Log](ZAP_Build_Log.png)
 5. Once the build is complete, navigate to "Builds->Images" and copy the registry URL for the new container
    1. Should look like: 172.30.1.1:5000/zap-demo/owasp-zap-openshift ![ZAP Image Stream](ZAP_Image_Stream.png)
-6. Deploy Persistent Jenkins installation - Point out that you may want to use additional storage space.
-   1. Via cli: `oc process openshift//jenkins-persistent -p VOLUME_CAPACITY=5Gi | oc create -f -`
+6. Deploy Jenkins
+   1. Via cli: `oc process openshift//jenkins-ephemeral -p VOLUME_CAPACITY=5Gi | oc create -f -`
 ```bash
-$ oc process openshift//jenkins-persistent -p VOLUME_CAPACITY=5Gi | oc create -f -
+$ oc process openshift//jenkins-ephermeral | oc create -f -
 route "jenkins" created
 persistentvolumeclaim "jenkins" created
 deploymentconfig "jenkins" created
