@@ -60,6 +60,7 @@ service "jenkins" created
 17. Scroll down to the Kubernetes Cloud configuration
    1. Highlight that we are using OpenShift and that the `zap-demo` namespace has already been populated. ![Jenkins Kubernetes Cloud](Jenkins_Kubernetes_Cloud.png)
 18. Click on "Add Pod Template" and select "Kubernetes Pod Template" 
+   1. NOTE: If using production OpenShift cluster, the Pod and container will likely already be populated.
 19. Fill in the "Name" and "Labels" as `zap-demo` ![Jenkins Kubernetes Slave Config](Jenkins_Kube_Slave_Config.png)
 20. Click on "Add" under "Containers"
 ```
