@@ -14,7 +14,7 @@ You can add applications to this project with the 'new-app' command. For example
 to build a new example application in Ruby.
 ```
 3. Deploy the image to OpenShift: `oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git`
-```bash
+```
 $ oc new-build -l 'role=jenkins-slave' https://github.com/rht-labs/owasp-zap-openshift.git
 --> Found Docker image 36540f3 (4 weeks old) from Docker Hub for "centos:centos7"
 
@@ -60,7 +60,7 @@ service "jenkins" created
 17. Scroll down to the Kubernetes Cloud configuration
    1. Highlight that we are using OpenShift and that the `zap-demo` namespace has already been populated. ![Jenkins Kubernetes Cloud](Jenkins_Kubernetes_Cloud.png)
 18. Click on "Add Pod Template" and select "Kubernetes Pod Template" 
-19. Fill in the "Name" and```````` "Labels" as `zap-demo` ![Jenkins Kubernetes Slave Config](Jenkins_Kube_Slave_Config.png)
+19. Fill in the "Name" and "Labels" as `zap-demo` ![Jenkins Kubernetes Slave Config](Jenkins_Kube_Slave_Config.png)
 20. Click on "Add" under "Containers"
 ```
 Name: jnlp
