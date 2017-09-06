@@ -7,16 +7,15 @@ RUN yum install -y epel-release && \
 RUN yum install -y redhat-rpm-config \
     make automake autoconf gcc gcc-c++ \
     libstdc++ libstdc++-devel \
-    java-1.8.0-openjdk ruby wget curl \
+    java-1.8.0-openjdk wget curl \
     xmlstarlet git x11vnc gettext tar \
     xorg-x11-server-Xvfb openbox xterm \
-    net-tools ruby-devel python-pip \
+    net-tools python-pip \
     firefox nss_wrapper java-1.8.0-openjdk-headless \
     java-1.8.0-openjdk-devel nss_wrapper git && \
     yum clean all
 
 RUN pip install --upgrade pip
-RUN gem install zapr
 RUN pip install zapcli
 # Install latest dev version of the python API
 RUN pip install python-owasp-zap-v2.4
