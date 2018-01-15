@@ -2,6 +2,8 @@
 FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
+USER root
+
 RUN yum install -y redhat-rpm-config \
     make automake autoconf gcc gcc-c++ \
     libstdc++ libstdc++-devel \
@@ -54,3 +56,4 @@ WORKDIR /var/lib/jenkins
 
 # Run the Jenkins JNLP client
 ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
+USER 1001
