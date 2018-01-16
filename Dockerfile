@@ -1,5 +1,5 @@
 # This dockerfile builds the zap stable release
-FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.1-13
+FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
 USER root
