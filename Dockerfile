@@ -7,7 +7,7 @@ USER root
 ## Disable hard-coded Red Hat repo in base image
 RUN rm -rf /etc/yum.repos.d/*
 
-RUN yum install -y net-tools python-pip \
+RUN yum install -y net-tools python27-python-pip \
     make automake autoconf gcc gcc-c++ \
     libstdc++ libstdc++-devel wget curl \
     xmlstarlet git x11vnc gettext tar \
