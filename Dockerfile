@@ -4,6 +4,9 @@ MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
 USER root
 
+## Disable hard-coded Red Hat repo in base image
+RUN rm -rf /etc/yum.repos.d/*
+
 RUN yum install -y net-tools python-pip \
     make automake autoconf gcc gcc-c++ \
     libstdc++ libstdc++-devel wget curl \
