@@ -1,5 +1,5 @@
 # This dockerfile builds the zap stable release
-FROM centos:centos7
+FROM registry.access.redhat.com/rhel7/rhel
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
 RUN yum install -y epel-release && \
