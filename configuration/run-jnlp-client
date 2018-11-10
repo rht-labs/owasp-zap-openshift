@@ -9,6 +9,14 @@
 # under.
 export JENKINS_HOME=/var/lib/jenkins
 
+# Set current user in nss_wrapper
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+if [ x"$USER_ID" != x"0" ]; then
+    echo "default:x:${USER_ID}:${GROUP_ID}:Default Application User:${HOME}:/sbin/nologin" >> /etc/passwd
+fi
+
 # Setup nss_wrapper so the random user OpenShift will run this container
 # has an entry in /etc/passwd.
 # This is needed for 'git' and other tools to work properly.
