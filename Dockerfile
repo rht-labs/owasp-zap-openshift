@@ -30,6 +30,8 @@ RUN mkdir -p /var/lib/jenkins/.vnc
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/
 COPY configuration/run-jnlp-client /usr/local/bin/run-jnlp-client
+COPY configuration/uid_entrypoint.sh /usr/local/bin/uid_entrypoint.sh
+RUN chmod 755 /usr/local/bin/uid_entrypoint.sh
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 ENV PATH $JAVA_HOME/bin:/zap:$PATH
