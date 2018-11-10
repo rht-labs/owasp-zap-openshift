@@ -1,33 +1,18 @@
 # This dockerfile builds the zap stable release
-FROM centos:centos7
+FROM registry.access.redhat.com/openshift3/jenkins-slave-base-rhel7
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
-RUN yum install -y epel-release && \
-    yum clean all
-RUN yum install -y redhat-rpm-config \
-    make automake autoconf gcc gcc-c++ \
-    libstdc++ libstdc++-devel \
-    java-1.8.0-openjdk wget curl \
-    xmlstarlet git x11vnc gettext tar \
-    xorg-x11-server-Xvfb openbox xterm \
-    net-tools python-pip \
-    firefox nss_wrapper java-1.8.0-openjdk-headless \
-    java-1.8.0-openjdk-devel nss_wrapper git && \
-    yum clean all
+USER root
 
-RUN pip install --upgrade pip
-RUN pip install zapcli
-# Install latest dev version of the python API
-RUN pip install python-owasp-zap-v2.4
+RUN yum install -y \
+    wget curl \
+    git gettext tar net-tools && \
+    yum clean all
 
 RUN mkdir -p /zap/wrk
 ADD zap /zap/
 
 RUN mkdir -p /var/lib/jenkins/.vnc
-
-# Copy the entrypoint
-COPY configuration/* /var/lib/jenkins/
-COPY configuration/run-jnlp-client /usr/local/bin/run-jnlp-client
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 ENV PATH $JAVA_HOME/bin:/zap:$PATH
@@ -42,10 +27,9 @@ COPY .xinitrc /var/lib/jenkins/
 
 WORKDIR /zap
 # Download and expand the latest stable release 
-RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | xmlstarlet sel -t -v //url |grep -i Linux | wget -q --content-disposition -i - -O - | tar zx --strip-components=1 && \
-    curl -s -L https://bitbucket.org/meszarv/webswing/downloads/webswing-2.3-distribution.zip | jar -x && \
+RUN curl -s https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions-dev.xml | grep "zaproxy/zaproxy/releases/download.*Linux" | sed 's@^[^>]*>\([^<]*\)<.*$@\1@g' | \
+    wget -q --content-disposition -i - -O - | tar zx --strip-components=1 && \
     touch AcceptedLicense
-ADD webswing.config /zap/webswing-2.3/webswing.config
 
 RUN chown root:root /zap -R && \
     chown root:root -R /var/lib/jenkins && \
@@ -53,6 +37,9 @@ RUN chown root:root /zap -R && \
     chmod 777 /zap -R
 
 WORKDIR /var/lib/jenkins
+
+USER 1001
+EXPOSE 8080
 
 # Run the Jenkins JNLP client
 ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
