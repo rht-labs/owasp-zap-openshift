@@ -75,6 +75,8 @@ source /usr/local/bin/configure-agent
 
 set -e
 
+JAR="${JENKINS_HOME}/remoting.jar"
+
 echo "Downloading http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar ..."
 curl -sS http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar -o ${JAR}
 
@@ -97,7 +99,6 @@ fi
 
 # if `docker run` has 2 or more arguments the user is passing jenkins launcher arguments
 if [[ $(echo "$@" | awk '{print NF}') -gt 1 ]]; then
-  JAR="${JENKINS_HOME}/remoting.jar"
   PARAMS=""
 
   # if -tunnel is not provided try env vars
