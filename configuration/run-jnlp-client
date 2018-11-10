@@ -75,6 +75,9 @@ source /usr/local/bin/configure-agent
 
 set -e
 
+echo "Downloading http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar ..."
+curl -sS http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar -o ${JAR}
+
 # As of version 1.6.0 of the Jenkins Kubernetes plugin,
 # args are no longer passed to jnlp container if not present in containerTemplate
 # See https://github.com/jenkinsci/kubernetes-plugin/pull/315
@@ -96,9 +99,6 @@ fi
 if [[ $(echo "$@" | awk '{print NF}') -gt 1 ]]; then
   JAR="${JENKINS_HOME}/remoting.jar"
   PARAMS=""
-
-  echo "Downloading http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar ..."
-  curl -sS http://$JENKINS_SERVICE_HOST:$JENKINS_SERVICE_PORT/jnlpJars/remoting.jar -o ${JAR}
 
   # if -tunnel is not provided try env vars
   if [[ "$@" != *"-tunnel "* ]]; then
