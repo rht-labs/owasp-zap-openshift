@@ -1,5 +1,5 @@
 # This dockerfile builds the zap stable release
-FROM registry.access.redhat.com/openshift3/jenkins-slave-base-rhel7
+FROM registry.access.redhat.com/openshift3/jenkins-slave-base-rhel7:v3.9
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
 USER root
@@ -14,7 +14,7 @@ ADD zap /zap/
 
 RUN mkdir -p /var/lib/jenkins/.vnc
 
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/jre-1.8.0
 ENV PATH $JAVA_HOME/bin:/zap:$PATH
 ENV ZAP_PATH /zap/zap.sh
 ENV HOME /var/lib/jenkins
