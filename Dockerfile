@@ -2,6 +2,8 @@
 FROM centos:centos7
 MAINTAINER Deven Phillips <deven.phillips@redhat.com>
 
+USER root
+
 RUN yum install -y epel-release && \
     yum clean all
 RUN yum install -y redhat-rpm-config \
@@ -50,9 +52,13 @@ ADD webswing.config /zap/webswing-2.3/webswing.config
 RUN chown root:root /zap -R && \
     chown root:root -R /var/lib/jenkins && \
     chmod 777 /var/lib/jenkins -R && \
-    chmod 777 /zap -R
+    chmod 777 /zap -R && \
+    chown root:root /etc/passwd && \
+    chmod 660 /etc/passwd
 
 WORKDIR /var/lib/jenkins
+
+USER 1001
 
 # Run the Jenkins JNLP client
 ENTRYPOINT ["/usr/local/bin/run-jnlp-client"]
