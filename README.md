@@ -1,4 +1,7 @@
-# OWASP [ZAP](https://github.com/zaproxy/zaproxy) Image For OpenShift
+# This repository is **DEPRECATED**
+Use the ZAP implementation found [HERE](https://github.com/redhat-cop/containers-quickstarts/tree/master/jenkins-agents/jenkins-agent-zap)
+
+## OWASP [ZAP](https://github.com/zaproxy/zaproxy) Image For OpenShift
 
 ## Overview
 The public docker registry version of OWASP's Zed Attack Proxy (ZAP) is not
